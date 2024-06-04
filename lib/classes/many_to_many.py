@@ -119,8 +119,10 @@ class Magazine:
      if isinstance(name, str):
         if len(name) <=16 and len(name) >=2:
             self._name = name
+        else:
+            raise ValueError("Name does not have between 2 and 16 characters")
      else:
-        raise ValueError("Name is not a string and is not between 2 and 16 characters.")
+        raise ValueError("Name is not a string .")
 
     @property
     def category(self):
@@ -187,20 +189,16 @@ class Magazine:
 
     @classmethod
     def top_publisher(cls):
-        magazine = None
         magazine_counts = {}
         maximum = 0
+        top_magazine = None
 
         for article in Article.all:
             magazine_counts[article.magazine] = magazine_counts.get(article.magazine, 0) + 1
-                    
-        for m,count in magazine_counts.items():
+
+        for m, count in magazine_counts.items():
             if count > maximum:
-                maximum == count
-                magazine == m
+                maximum = count
+                top_magazine = m
 
-
-        if magazine == None:
-            return None
-        else:
-            return magazine
+        return top_magazine
